@@ -1,0 +1,43 @@
+name: latest
+
+on:
+  push:
+    paths:
+      - .github/workflows/latest.yml
+      - "*Dockerfile"
+
+  workflow_dispatch:
+
+env:
+  DOCKER_BASE_NAME: ghcr.io/vivid-lapin/epgstation
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Setup QEMU user-mode emulation
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push (rpi)
+        uses: docker/build-push-action@v2
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          push: true
+          file: rpi.Dockerfile
+          platforms: linux/arm/v7
+          tags: ${{ env.DOCKER_BASE_NAME }}:rpi
+          cache-from: ${{ env.DOCKER_BASE_NAME }}:rpi
+          build-args: BUILDKIT_INLINE_CACHE=1
