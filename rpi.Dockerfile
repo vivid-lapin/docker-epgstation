@@ -1,6 +1,6 @@
 FROM l3tnun/epgstation:master-debian AS epgs-image
 
-FROM collelog/ffmpeg:4.3.1-alpine-arm32v7 as ffmpeg-image
+FROM collelog/ffmpeg:4.3.1-alpine-rpi3 as ffmpeg-image
 
 FROM --platform=$TARGETPLATFORM node:14-alpine
 
@@ -15,3 +15,4 @@ RUN rm -rf \
     .vscode
 
 ENTRYPOINT [ "node", "dist/index.js" ]
+EXPOSE 8888
