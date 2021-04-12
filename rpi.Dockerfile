@@ -9,7 +9,7 @@ RUN apt-get update && \
     \
     # install hardware acceleration ffmpeg
     echo "deb http://archive.raspberrypi.org/debian/ buster main" > /etc/apt/sources.list.d/raspi.list && \
-    gpg --keyserver keys.gnupg.net --recv-key 82B129927FA3303E && \
+    gpg --keyserver hkps://pgpkeys.eu:443 --recv-key 82B129927FA3303E && \
     gpg -a --export 82B129927FA3303E| apt-key add - && \
     apt-get update && \
     apt-get -y install ffmpeg && \
