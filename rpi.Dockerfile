@@ -5,20 +5,20 @@ ENV DEV="make gcc git g++ automake curl wget autoconf build-essential python pyt
 RUN apt-get update && \
     apt-get -y install $DEV && \
     apt-get -y install openssh-client rsync nkf && \
-    apt-get -y install sqlite3 && \
-    \
-    # install hardware acceleration ffmpeg
-    echo "deb http://archive.raspberrypi.org/debian/ buster main" > /etc/apt/sources.list.d/raspi.list && \
+    apt-get -y install sqlite3
+
+# install hardware acceleration ffmpeg
+RUN echo "deb http://archive.raspberrypi.org/debian/ buster main" > /etc/apt/sources.list.d/raspi.list && \
     gpg --keyserver hkps://pgpkeys.eu:443 --recv-key 82B129927FA3303E && \
     gpg -a --export 82B129927FA3303E| apt-key add - && \
     apt-get update && \
-    apt-get -y install ffmpeg && \
-    \
-    # install EPGStation
-    cd /usr/local/ && \
+    apt-get -y install ffmpeg
+
+# install EPGStation
+RUN cd /usr/local/ && \
     git clone https://github.com/l3tnun/EPGStation.git && \
     cd /usr/local/EPGStation && \
-    npm install --no-package-lock --no-save && \
+    npm run all-install && \
     \
     npm run build && \
     \
