@@ -1,12 +1,12 @@
 FROM --platform=$TARGETPLATFORM l3tnun/epgstation:master-alpine AS epgs-image
 
-FROM collelog/ffmpeg:4.3.1-alpine-rpi3 as ffmpeg-image
+FROM --platform=$TARGETPLATFORM collelog/ffmpeg:4.3.1-alpine-rpi3-arm32v7 as ffmpeg-image
 
 FROM --platform=$TARGETPLATFORM node:14-alpine
 
-RUN apk add --update sqlite python3 gcc
+RUN apk add --no-cache --update-cache sqlite python gcc musl
 
-COPY --from=ffmpeg-image /build /usr/local/bin
+COPY --from=ffmpeg-image /build /
 
 WORKDIR /app
 COPY --from=epgs-image /app ./
