@@ -7,12 +7,14 @@ FROM --platform=$TARGETPLATFORM node:14-alpine
 RUN apk add --no-cache --update-cache sqlite python gcc musl
 
 COPY --from=ffmpeg-image /build /
+ENV LD_LIBRARY_PATH /opt/vc/lib
 
 WORKDIR /app
 COPY --from=epgs-image /app ./
 RUN npm install --production \
     && npm prune --production \
     && npm cache clean --force
+RUN rm -rf client/node_modules
 RUN rm -rf \
     .dockerignore \
     .git \
