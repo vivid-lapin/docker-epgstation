@@ -10,7 +10,9 @@ COPY --from=ffmpeg-image /build /
 
 WORKDIR /app
 COPY --from=epgs-image /app ./
-RUN npm install --production && npm prune --production
+RUN npm install --production \
+    && npm prune --production \
+    && npm cache clean --force
 RUN rm -rf \
     .dockerignore \
     .git \
