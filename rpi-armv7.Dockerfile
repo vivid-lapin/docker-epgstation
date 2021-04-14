@@ -3,6 +3,7 @@ FROM --platform=$TARGETPLATFORM l3tnun/epgstation:master-alpine AS epgs-image
 FROM --platform=$TARGETPLATFORM collelog/ffmpeg:4.3.1-alpine-rpi3-arm32v7 as ffmpeg-image
 
 FROM --platform=$TARGETPLATFORM node:14-alpine
+LABEL maintainer="ci7lus <7887955+ci7lus@users.noreply.github.com>"
 
 RUN apk add --no-cache --update-cache sqlite python gcc musl
 
