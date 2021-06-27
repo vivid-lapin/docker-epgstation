@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM l3tnun/epgstation:v2.4.2-debian AS epgs-image
+FROM --platform=$TARGETPLATFORM l3tnun/epgstation:v2.5.0-debian AS epgs-image
 
 WORKDIR /app
 RUN rm -rf client/node_modules
